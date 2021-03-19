@@ -1,25 +1,24 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-
-const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
-]
-
+import HomePage from '../pages/HomePage.vue'
+import BestsellerCategories from '../components/BestsellerCategories.vue';
+import BestsellerBooks from '../components/BestsellerBooks.vue';
+import SearchBook from '../components/SearchBook.vue';
+import SavedBook from '../components/SavedBook.vue';
+import BookCategories from '../components/BookCategory.vue';
+import TheAbout from '../components/TheAbout.vue';
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes
-})
+  history: createWebHistory(),
+  routes:[
+      {path:'/', redirect:'/home'},
+      {path:'/home', component:HomePage},
+      {path:'/bestsellers', component:BestsellerCategories, children:[
+        {path:':bookId', component:BestsellerBooks,props:true}
+      ]},
+      {path:'/search',component:SearchBook},
+      {path:'/saved',component:SavedBook},
+      {path:'/categories',component:BookCategories},
+      {path:'/about', component:TheAbout}
+  ]
+});
 
 export default router
