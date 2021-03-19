@@ -228,7 +228,8 @@ export default {
        justify-items: center;
         display: inline-grid;
         width: 75vw;
-        grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+        grid-template-columns: repeat(auto-fit, minmax(130px,1fr));
+        grid-gap: 1rem;
         overflow-y: auto;
         overflow-x:hidden;
         height: 63vh;
@@ -270,9 +271,9 @@ export default {
 
 @media only screen and (max-width: 768px) {
   .grid-container{
-      width: 95vw;
+      width: 100vw;
       margin: 0.5rem;
-      height: 73vh;
+      height: 63vh;
   }
   .pagination{
       width: 95vw;

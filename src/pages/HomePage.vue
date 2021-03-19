@@ -20,7 +20,7 @@
    
       
       <div class="grid-container category">
-            <div class="grid-item p-5  is-justify-content-space-between"  @click="openDetail(trend)" v-for="trend in trendingBooks" :key="trend.title">
+            <div class="grid-item p-3  is-justify-content-space-between"  @click="openDetail(trend)" v-for="trend in trendingBooks" :key="trend.title">
                <grid-view :trend='trend'></grid-view>
                
             </div>
@@ -114,7 +114,8 @@ export default {
        justify-items: center;
   display: inline-grid;
   width: 75vw;
-        grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+        grid-template-columns: repeat(auto-fit, minmax(140px,1fr));
+        grid-gap: 1rem;
   overflow-y: auto;
    overflow-x:hidden;
    height: 50vh;
@@ -141,7 +142,7 @@ export default {
 @media only screen and (max-width: 768px){
    .frame{
       width: 95vw;
-      margin: 2rem 1rem .5rem 1.2rem;
+      margin: 1rem 1rem .5rem 1.2rem;
       height: 20vh;
       text-align: center;
    }
@@ -158,6 +159,7 @@ export default {
    width: 95vw;
    margin-left: 1.25rem;
    height: 60vh;
+   grid-gap: 0rem;
 }
 .newyorkCategory{
    width: 100vw;

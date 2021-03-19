@@ -1,7 +1,7 @@
 <template>
     <newyork-detail :active="active" :selectedBook="selectedBook" @closeModal="closeModal"></newyork-detail>
-    <div class="grid-container mx-6 category">         
-            <div class="grid-item p-5  is-justify-content-space-between" @click="openDetail(trend)"  v-for="trend in books" :key="trend.title">
+    <div class="grid-container category">         
+            <div class="grid-item p-3  is-justify-content-space-between" @click="openDetail(trend)"  v-for="trend in books" :key="trend.title">
                <grid-view :trend='trend'></grid-view>
                
             </div>
@@ -65,12 +65,28 @@ export default {
 .grid-container {
        justify-items: center;
   display: inline-grid;
-  grid-template-columns: repeat(6,1fr);
+        grid-template-columns: repeat(auto-fit, minmax(140px,1fr));
+        grid-gap: 1rem;
   overflow-y: auto;
    overflow-x:hidden;
    height: 50vh;
+   width: 75vw;
+   margin-left: 3rem;
    }
    .grid-container::-webkit-scrollbar{
    width: 5px;
+}
+@media only screen and (max-width: 768px){
+    .grid-container{
+   width: 95vw;
+   margin-left: .5rem;
+   height: 60vh;
+   grid-gap: unset;
+}
+}
+@media only screen and (max-width: 430px){
+    .grid-container{
+        height: 55vh;
+    }
 }
 </style>

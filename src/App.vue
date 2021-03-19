@@ -21,6 +21,16 @@
   </div>
 </div>
 </teleport>
+  
+  <div style="font-family: 'Lobster', cursive;" class="is-flex is-justify-content-center  is-hidden-tablet m-2">
+    <div class="container"  @click="myFunction()" :class="{change:sideBar}">
+  <div class="bar1" ></div>
+  <div class="bar2"></div>
+  <div class="bar3"></div>
+  </div>
+    <h1 class="BookBin has-text-black" style="margin-right:40vw">BookBin</h1>
+    
+  </div>
   <div class="columns">
   <div class="column is-one-fifth is-hidden-mobile">
     <div class=" is-flex is-flex-direction-column is-justify-content-center is-align-items-center logo" style="height:35vh;font-family: 'Lobster', cursive;">
@@ -43,6 +53,16 @@
       </div> -->
     </div>
   </div>
+  <div class="parentSideNav" :class="{hide:!sideBar, visible:sideBar}">
+      <div class=" is-flex is-flex-direction-column is-align-items-center is-hidden-tablet sideNav" >
+      <base-button title="Home" imgSrc="home" navTo="/home"></base-button>
+      <base-button title="Search" imgSrc="search" navTo="/search"></base-button>
+      <base-button title="Saved" imgSrc="save" navTo="/saved"></base-button>
+      <base-button title="Categories" imgSrc="cat" navTo="/categories"></base-button>
+      <base-button title="About" imgSrc="about" navTo="/about"></base-button>
+  </div>
+  </div>
+  
   <div class="column p-0">
     <router-view></router-view>
   </div>
@@ -57,7 +77,8 @@ import BaseCard from './components/BaseCard.vue';
 export default {
   data(){
     return{
-      active:false
+      active:false,
+      sideBar:false
     }
   },
   components:{
@@ -71,6 +92,9 @@ export default {
      this.loadCategories();
   },
   methods:{
+    myFunction() {
+      this.sideBar=!this.sideBar;
+    },
     closeModal(){
       this.active=false;
     },
@@ -132,10 +156,59 @@ export default {
   .BookBin{
     font-size: 3rem;
   }
+  .parentSideNav{
+    position: absolute;
+    z-index: 1;
+    box-shadow: 0px 10px 20px rgb(187, 187, 187);
+    transition: ease-in;
+
+  }
+  .sideNav{
+    background-color:rgba(255, 255, 255);
+    height: 95vh;
+    width: 250px;
+  }
+  .container {
+  display: inline-block;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.bar1, .bar2, .bar3 {
+  width: 35px;
+  height: 5px;
+  background-color: #333;
+  margin: 6px 0;
+  transition: 0.4s;
+}
+
+.change .bar1 {
+  -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+  transform: rotate(-45deg) translate(-9px, 6px);
+}
+
+.change .bar2 {opacity: 0;}
+
+.change .bar3 {
+  -webkit-transform: rotate(45deg) translate(-8px, -8px);
+  transform: rotate(45deg) translate(-8px, -8px);
+}
+.hide{
+  visibility: hidden;
+  transition:150ms linear;
+}
+.visible{
+  visibility: visible;
+  transition:ease-in;
+  transition-delay: 200ms;
+}
  @media only screen and (max-width:1024px)
  {
   .BookBin{
     font-size: 2.0rem;
+  }
+  .parentSideNav{
+    height: 80vh;
   }
  }
 </style>
