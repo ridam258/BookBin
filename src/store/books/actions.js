@@ -5,6 +5,7 @@ export default{
         const books=[];
         for(const item of items){
             const book={
+                isSaved:false,
                 isGoogle:true,
                 id: item.id,
                 image:item.volumeInfo.imageLinks==null?'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAG2u-VKWeP2hnQpMpORlAIVMxnlL01utRiw&usqp=CAU':item.volumeInfo.imageLinks.thumbnail,
@@ -43,6 +44,7 @@ export default{
     loadSavedBooks(context,payload){
         const books=[];
         const book={
+                isSaved:payload.isSaved,
                 isGoogle:payload.isGoogle,
                 id: payload.id,
                 image:payload.image,

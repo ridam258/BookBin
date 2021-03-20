@@ -5,7 +5,7 @@ import BestsellerBooks from '../components/BestsellerBooks.vue';
 import SearchBook from '../components/SearchBook.vue';
 import SavedBook from '../components/SavedBook.vue';
 import BookCategories from '../components/BookCategory.vue';
-import TheAbout from '../components/TheAbout.vue';
+// import TheAbout from '../components/TheAbout.vue';
 const router = createRouter({
   history: createWebHistory(),
   routes:[
@@ -17,7 +17,7 @@ const router = createRouter({
       {path:'/search',component:SearchBook},
       {path:'/saved',component:SavedBook},
       {path:'/categories',component:BookCategories},
-      {path:'/about', component:TheAbout}
+      // {path:'/about', component:TheAbout}
   ]
 });
 

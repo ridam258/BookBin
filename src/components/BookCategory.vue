@@ -257,8 +257,6 @@ export default {
    }
    .grid-container::-webkit-scrollbar{
    width: 5px;
-   margin-left: 500px;
-   
 } 
 
 .active{

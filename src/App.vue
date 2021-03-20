@@ -11,8 +11,16 @@
       <a href="http://localhost:8080/home" class="is-size-5">click here</a>
       <br><br><br>
       <h1>This website is created with ❤️ by <br> <a class="has-text-black" style="text-decoration:underline" href="https://ridam258.github.io/Personal-website/">Ridam Jain</a></h1>
-      
+      <h1 class="is-size-6 has-text-weight-semibold pt-6">Created by Ridam Jain</h1>
+      <div class="is-flex is-justify-content-center">
+        <a href="#" class="fa fa-facebook m-3 is-size-5 has-text-black"></a>
+      <a href="#" class="fa fa-twitter m-3 is-size-5 has-text-black"></a>
+      <a href="#" class="fa fa-github m-3 is-size-5 has-text-black"></a>
+      <a href="#" class="fa fa-linkedin m-3 is-size-5 has-text-black"></a>
+      <a href="#" class="fa fa-instagram m-3 is-size-5 has-text-black"></a>
+      </div>
       <div style="width:100%" class="is-flex is-justify-content-center">
+        
       <button class="button" @click="closeModal">Okay</button>
       </div>
     </div>
@@ -37,30 +45,26 @@
       
       <router-link  to="/home"><h1 class="has-text-weight-bold BookBin">BookBin</h1></router-link>
     </div>
-    <div  class=" is-flex is-flex-direction-column is-align-items-center ">
+    <div  class=" is-flex is-flex-direction-column is-align-items-center mt-3 ml-3 ">
       <base-button title="Home" imgSrc="home" navTo="/home"></base-button>
       <base-button title="Search" imgSrc="search" navTo="/search"></base-button>
       <base-button title="Saved" imgSrc="save" navTo="/saved"></base-button>
       <base-button title="Categories" imgSrc="cat" navTo="/categories"></base-button>
-      <base-button title="About" imgSrc="about" navTo="/about"></base-button>
-      <!-- <h1 class="is-size-6 has-text-weight-semibold pt-6">Created by Ridam Jain</h1>
-      <div class="is-flex">
-        <a href="#" class="fa fa-facebook m-3 is-size-5 has-text-black"></a>
-      <a href="#" class="fa fa-twitter m-3 is-size-5 has-text-black"></a>
-      <a href="#" class="fa fa-github m-3 is-size-5 has-text-black"></a>
-      <a href="#" class="fa fa-linkedin m-3 is-size-5 has-text-black"></a>
-      <a href="#" class="fa fa-instagram m-3 is-size-5 has-text-black"></a>
-      </div> -->
+      <base-button title="About" imgSrc="about" navTo="/about" @click="openModal"></base-button>
+      
     </div>
   </div>
-  <div class="parentSideNav" :class="{hide:!sideBar, visible:sideBar}">
+  
+<div class="parentSideNav" :class="{hide:!sideBar, visible:sideBar}" @click="close">
       <div class=" is-flex is-flex-direction-column is-align-items-center is-hidden-tablet sideNav" >
       <base-button title="Home" imgSrc="home" navTo="/home"></base-button>
       <base-button title="Search" imgSrc="search" navTo="/search"></base-button>
       <base-button title="Saved" imgSrc="save" navTo="/saved"></base-button>
       <base-button title="Categories" imgSrc="cat" navTo="/categories"></base-button>
-      <base-button title="About" imgSrc="about" navTo="/about"></base-button>
+      <base-button title="About" imgSrc="about" navTo="/about" @click="openModal"></base-button>
   </div>
+  
+  
   </div>
   
   <div class="column p-0">
@@ -92,6 +96,9 @@ export default {
      this.loadCategories();
   },
   methods:{
+    openModal(){
+      this.active=true;
+    },
     myFunction() {
       this.sideBar=!this.sideBar;
     },
@@ -107,6 +114,10 @@ export default {
          catch(error){
             console.log(error);
          }
+      },
+      close(){
+       this.sideBar=false;
+        
       }
   }
 }
@@ -161,6 +172,8 @@ export default {
     z-index: 1;
     box-shadow: 0px 10px 20px rgb(187, 187, 187);
     transition: ease-in;
+    width: 100%;
+    height: 100vh;
 
   }
   .sideNav{
@@ -202,13 +215,20 @@ export default {
   transition:ease-in;
   transition-delay: 200ms;
 }
+.r{
+  background-color: red;
+}
  @media only screen and (max-width:1024px)
  {
   .BookBin{
     font-size: 2.0rem;
   }
-  .parentSideNav{
-    height: 80vh;
-  }
+  
  }
+/* @media only screen and (max-width:768px){
+.parentSideNav{
+    /* height: 90vh; */
+  /* }
+} */
+ 
 </style>

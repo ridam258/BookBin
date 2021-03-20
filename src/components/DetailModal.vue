@@ -9,7 +9,7 @@
                         <div class="is-flex titAuth">
                             <img class="p-2 logo" :src="bookClicked.image" >
                             <div class="px-4 py-3 right">
-                                <h1 class="has-text-weight-bold title">{{ bookClicked.title }}</h1>
+                                <h1 class="has-text-weight-bold title" >{{ bookClicked.title }}</h1>
                                 <h2 class="author has-text-weight-semibold has-text-warning">[{{ bookClicked.author}}]</h2>
                                 <hr class="m-1">
                                 <h4 class="subtitle">{{ bookClicked.subtitle}}</h4>
@@ -26,14 +26,17 @@
                         <h2 class="category px-2">{{ bookClicked.category }}</h2>
                         <h2 class="amount px-2">{{ bookClicked.rate }}</h2>
                         </div>
-                        <div class="is-flex">
-                                <button  v-if="save===false" class="button mx-3 p-3 has-text-weight-semibold is-danger" @click="saveClicked(bookClicked)">Save</button>
-                                <router-link to="/saved"  v-else><button class="button mx-3 p-3 has-text-weight-semibold is-danger" >View</button></router-link>
-                                <a :href="bookClicked.link"><button class="button mx-3 p-3 has-text-weight-semibold is-light">Open</button></a>
-                                </div>
+                        
                         </div>
+                        
                        
                         <hr>
+                        <div class="is-flex">
+                                <button  v-if="bookClicked.isSaved===false&&!pathIsSaved" class="button mx-3 p-3 has-text-weight-semibold is-danger" @click="saveClicked(bookClicked)">Save</button>
+                                <router-link to="/saved"  v-else-if="bookClicked.isSaved&&!pathIsSaved"><button class="button mx-3 p-3 has-text-weight-semibold is-danger" >View</button></router-link>
+                                <button  v-else-if="bookClicked.isSaved===true&&pathIsSaved" class="button mx-3 p-3 has-text-weight-semibold is-danger" @click="deleteClicked(bookClicked)">Delete</button>
+                                <a :href="bookClicked.link"><button class="button mx-3 p-3 has-text-weight-semibold is-light">Open</button></a>
+                                </div>
                         <div class="description has-text-centered has-text-danger">
                             <h1 class="descHead has-text-weight-semibold ">Description</h1>
                             <hr>
@@ -42,7 +45,7 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="is-flex is-justify-content-space-around pb-4 px-2 has-text-centered">
+                        <div class="is-flex is-justify-content-space-around is-align-items-center pb-4 px-2 has-text-centered">
                             <div style="max-width:34%">
                                 <h1 class="has-text-weight-bold p-2 catElse">Publisher</h1>
                                 <h2 class="has-text-danger catChild has-text-weight-semibold">{{ bookClicked.publisher }}</h2>
@@ -75,20 +78,23 @@ export default {
             activeStatus:false,
             bookClicked:{},
             bookDesc:'',
-            save:false,
-            savedBook:{}
+            savedBook:{},
+            pathIsSaved:false
         }
     },
     methods:{
         closeModal(){
             this.activeStatus=false;
             this.$emit('closeModal');
-            this.save=false;
         },
         saveClicked(book){
-            this.save=true;
+            book.isSaved=true;
+            console.log(book);
             this.savedBook=book;
-            
+        },
+        deleteClicked(book){
+            book.isSaved=false;
+
         }
 },
     watch:{
@@ -96,10 +102,17 @@ export default {
             this.activeStatus=value
         },
         selectedBook(value){
-            this.bookClicked=value;
+        this.bookClicked=value;
+        console.log(this.bookClicked);
+
         },
         savedBook(value){
             this.$store.dispatch('books/loadSavedBooks',value);
+        }
+    },
+    created(){
+        if(this.$route.path==='/saved'){
+            this.pathIsSaved=true;
         }
     },
     emits:['closeModal']
@@ -167,7 +180,7 @@ html{
         font-size: .75rem;
     }
     .category{
-        font-size: 1rem;
+        font-size: .75rem;
     }
     .amount{
         font-size: .75rem;
@@ -193,6 +206,11 @@ html{
     }
     .titAuth{
         height: 30vh;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    .modal-card{
+        width: 80vw;
     }
 }
 </style>

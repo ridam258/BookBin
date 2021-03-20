@@ -29,6 +29,7 @@ export default {
             const temp=responseData.results.books;
             for(const t of temp){
                 const x={
+                    isSaved:false,
                     isGoogle:false,
                     title:t.title,
                     image:t.book_image,

@@ -74,6 +74,7 @@ export default {
          const books = responseData.results.books;
          for(const book of books){
             const temp={
+            isSaved:false,
             isGoogle:false,
             title:book.title,
             image:book.book_image,
@@ -157,7 +158,7 @@ export default {
 }
 .grid-container{
    width: 95vw;
-   margin-left: 1.25rem;
+   margin-left: 1.55rem;
    height: 60vh;
    grid-gap: 0rem;
 }

@@ -1,7 +1,14 @@
 <template>
 <detail-modal  :active="activeGoogle" :selectedBook="selectedBook" @closeModal="closeModal"></detail-modal>
 <newyork-detail :active="activeNew" :selectedBook="selectedBook" @closeModal="closeModal"></newyork-detail>
-<div class="card-Container my-4">
+<div v-if="savedBooks.length==0" class="is-flex is-align-items-center" style="height:60vh" >
+<base-card  style="background-color:white;" class="has-text-centered">
+    <h1 class="is-size-4 has-text-weight-bold">You Have Not Saved Anything Yet!</h1>
+    <h1 class="is-size-4 has-text-weight-bold">Your Saved Books Wiil Be Shown Here!</h1>
+</base-card>
+</div>
+
+<div class="card-Container my-4" v-else>
     <div v-for="book of savedBooks" :key="book.title" class="mt-6" >
         
         <div class="card is-flex mx-6 mb-4" @click="openDetail(book)">
@@ -61,6 +68,11 @@ export default {
                this.google = this.selectedBook.isGoogle;
             }
         }
+    },
+    created(){
+        console.log(this.savedBooks.length);
+        console.log(this.$route);
+        
     }
 
 
