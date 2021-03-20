@@ -26,17 +26,17 @@
                         <h2 class="category px-2">{{ bookClicked.category }}</h2>
                         <h2 class="amount px-2">{{ bookClicked.rate }}</h2>
                         </div>
-                        
-                        </div>
-                        
-                       
-                        <hr>
                         <div class="is-flex">
                                 <button  v-if="bookClicked.isSaved===false&&!pathIsSaved" class="button mx-3 p-3 has-text-weight-semibold is-danger" @click="saveClicked(bookClicked)">Save</button>
                                 <router-link to="/saved"  v-else-if="bookClicked.isSaved&&!pathIsSaved"><button class="button mx-3 p-3 has-text-weight-semibold is-danger" >View</button></router-link>
                                 <button  v-else-if="bookClicked.isSaved===true&&pathIsSaved" class="button mx-3 p-3 has-text-weight-semibold is-danger" @click="deleteClicked(bookClicked)">Delete</button>
                                 <a :href="bookClicked.link"><button class="button mx-3 p-3 has-text-weight-semibold is-light">Open</button></a>
                                 </div>
+                        </div>
+                        
+                       
+                        <hr>
+                        
                         <div class="description has-text-centered has-text-danger">
                             <h1 class="descHead has-text-weight-semibold ">Description</h1>
                             <hr>
