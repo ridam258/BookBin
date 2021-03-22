@@ -31,7 +31,10 @@
 </div>
 </div>
     </div>
-    <div class="grid-container  category">
+    <div v-if="isLoading" style="height:60vh" class="is-flex is-justify-content-center is-align-items-center" >
+         <dot-loader :loading="isLoading" :color="red" ></dot-loader>
+      </div>
+    <div v-else class="grid-container  category">
     
          <div  class="grid-item my-2 ml-5 mr-3" v-for="book in loadedBooks" :key="book.id" @click="openDetail(book)">
             <google-grid :trend='book'></google-grid>
@@ -48,6 +51,8 @@ export default {
   components: { DetailModal },
   data(){
     return{
+      red:'#707070',
+      isLoading:false,
             active:false,
       selected:'title',
       start:0,
@@ -81,7 +86,7 @@ export default {
   },
   methods:{
     async searchTitle(title,startingIndex){
-            
+            this.isLoading=true;
             if(this.key===true){
               try{
                 const response= await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title}&startIndex=${startingIndex}&maxResults=${this.maxResult}`);
@@ -89,6 +94,7 @@ export default {
                 this.totalItems=responseData.totalItems;
                 console.log(this.totalItems);
                 this.$store.dispatch('books/loadBooks',responseData);
+                this.isLoading=false;
                 }
             catch(error){
                 console.log(error);
@@ -101,6 +107,7 @@ export default {
                 this.totalItems=responseData.totalItems;
                 console.log(this.totalItems);
                 this.$store.dispatch('books/loadBooks',responseData);
+                this.isLoading=false;
                 }
             catch(error){
                 console.log(error);

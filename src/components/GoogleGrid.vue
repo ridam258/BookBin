@@ -15,6 +15,12 @@ export default {
 }
 </script>
 <style scoped>
+img{
+   cursor: pointer;
+}
+h1{
+   cursor: pointer;
+}
 .gridImage{
       border: 1px solid rgba(0, 0, 0, 0.2);
       border-radius: 15px;

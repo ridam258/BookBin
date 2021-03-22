@@ -18,7 +18,10 @@
   </div>
   
 </div>
-<div class="grid-container  category">
+<div v-if="isLoading" style="height:63vh" class="is-flex is-justify-content-center is-align-items-center" >
+         <dot-loader :loading="isLoading" :color="red" ></dot-loader>
+      </div>
+<div v-else class="grid-container  category">
     
          <div  class="grid-item my-2 ml-5 mr-3" v-for="book in loadedBooks" :key="book.id" @click="openDetail(book)">
             <google-grid :trend='book'></google-grid>
@@ -59,6 +62,8 @@ export default {
     },
     data(){
         return{
+            isLoading:false,
+            red:'#707070',
             selectedBook:{},
             active:false,
             selectedCat:'',
@@ -156,12 +161,13 @@ export default {
 
         },
         async returnName(selectedCategory,start){
-            
+            this.isLoading=true;
             this.selectedCat=selectedCategory;
             try{
                 const response= await fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:${selectedCategory}&startIndex=${start}&maxResults=${this.maxResult}`);
                 const responseData=await response.json();
                 this.$store.dispatch('books/loadBooks',responseData);
+                this.isLoading=false;
                 this.totalItems=responseData.totalItems;
                 
                 }

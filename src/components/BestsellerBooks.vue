@@ -1,5 +1,8 @@
 <template>
     <newyork-detail :active="active" :selectedBook="selectedBook" @closeModal="closeModal"></newyork-detail>
+    <div v-if="isLoading" style="height:40vh" class="is-flex is-justify-content-center is-align-items-center" >
+         <dot-loader :loading="isLoading" :color="red" ></dot-loader>
+      </div>
     <div class="grid-container category">         
             <div class="grid-item p-3  is-justify-content-space-between" @click="openDetail(trend)"  v-for="trend in books" :key="trend.title">
                <grid-view :trend='trend'></grid-view>
@@ -14,9 +17,11 @@ import NewyorkDetail from './NewyorkDetail.vue';
 export default {
     data(){
         return{
+            red:'#707070',
             active:false,
             books:[],
-            selectedBook:{}
+            selectedBook:{},
+            isLoading:false
         }
     },
     components: { GridView,
@@ -24,6 +29,7 @@ export default {
     props:['bookId'],
     methods:{
         async loadBooks(){
+            this.isLoading=true;
             const response = await fetch(`https://api.nytimes.com/svc/books/v3/lists/current/${this.bookId}.json?api-key=YPM2SmXttdC4PgRrpY1FjqB9Ud0fQVga`);
             const responseData = await response.json();
             const temp=responseData.results.books;
@@ -41,6 +47,7 @@ export default {
                 }
                 this.books.push(x);
                 this.$store.dispatch('books/loadNewYorkBooks',this.books);
+                this.isLoading=false;
             }
             
             

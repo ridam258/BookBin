@@ -7,17 +7,16 @@
     <base-card>
     <div class="modalPop has-text-centered">
       <h1>Are you using this website on mobile?</h1>
-      <h1>If yes then download it in app created by <a class="has-text-black" style="text-decoration:underline" href="#">Hrishikesh rathore</a> for better experience</h1>
-      <a href="http://localhost:8080/home" class="is-size-5">click here</a>
+      <h1>If yes then download it in app created by <a class="has-text-black" style="text-decoration:underline" href="http://hrishikeshrathore.ml/">Hrishikesh rathore</a> for better experience</h1>
+      <a href="https://drive.google.com/file/d/1AwMryy_FPKFJQmnABKFLy-C5bbdU7Z_L/view?usp=sharing" class="is-size-5">click here</a>
       <br><br><br>
       <h1>This website is created with ❤️ by <br> <a class="has-text-black" style="text-decoration:underline" href="https://ridam258.github.io/Personal-website/">Ridam Jain</a></h1>
-      <h1 class="is-size-6 has-text-weight-semibold pt-6">Created by Ridam Jain</h1>
       <div class="is-flex is-justify-content-center">
-        <a href="#" class="fa fa-facebook m-3 is-size-5 has-text-black"></a>
-      <a href="#" class="fa fa-twitter m-3 is-size-5 has-text-black"></a>
-      <a href="#" class="fa fa-github m-3 is-size-5 has-text-black"></a>
-      <a href="#" class="fa fa-linkedin m-3 is-size-5 has-text-black"></a>
-      <a href="#" class="fa fa-instagram m-3 is-size-5 has-text-black"></a>
+        <a href="https://m.facebook.com/ridam.jain.520?ref=bookmarks" class="fa fa-facebook m-3 is-size-5 has-text-black"></a>
+      <a href="https://twitter.com/RidamJain9?s=08" class="fa fa-twitter m-3 is-size-5 has-text-black"></a>
+      <a href="https://github.com/ridam258" class="fa fa-github m-3 is-size-5 has-text-black"></a>
+      <a href="https://www.linkedin.com/in/ridam-jain-77366717a" class="fa fa-linkedin m-3 is-size-5 has-text-black"></a>
+      <a href="https://www.instagram.com/ridam._.jain/" class="fa fa-instagram m-3 is-size-5 has-text-black"></a>
       </div>
       <div style="width:100%" class="is-flex is-justify-content-center">
         
@@ -36,7 +35,7 @@
   <div class="bar2"></div>
   <div class="bar3"></div>
   </div>
-    <h1 class="BookBin has-text-black" style="margin-right:40vw">BookBin</h1>
+    <router-link to="/home" class="BookBin has-text-black" style="margin-right:40vw">BookBin</router-link>
     
   </div>
   <div class="columns">

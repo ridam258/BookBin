@@ -6,12 +6,15 @@ import BaseCard from './components/BaseCard.vue';
 import BaseButton from './components/BaseButton.vue';
 import GridView from './components/GridView.vue';
 import GoogleGrid from './components/GoogleGrid.vue';
+import DotLoader from 'vue-spinner/src/DotLoader.vue';
+
 const app =createApp(App);
 
 app.component('base-card',BaseCard);
 app.component('base-button',BaseButton);
 app.component('grid-view' , GridView);
 app.component('google-grid',GoogleGrid);
+app.component('dot-loader',DotLoader);
 app.use(store);
 app.use(router);
 app.mount('#app');

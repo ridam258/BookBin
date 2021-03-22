@@ -3,7 +3,7 @@
    <div class="frame">
       <div style="width:100%; height:100%">
          <div :class="{dis:index!==counter, hi:index===counter}"   v-for="(trend,index) in trendingBooks" :key="trend" >
-            <div v-if="index===counter" style="height:100%; width:100% " class="p-4 is-flex is-justify-content-flex-start">
+            <div v-if="index===counter" @click="openDetail(trend)" style="height:100%; width:100% " class="p-4 is-flex is-justify-content-flex-start top">
                <img :src="trend.image" class="logo" alt="">
                <div class="titAuthHead" style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;">
                <h1 style=" display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;overflow: hidden;" class="titAuth">{{trend.title}}</h1>
@@ -29,8 +29,10 @@
          </div>
       </div>
    
-      
-      <div class="grid-container category">
+      <div v-if="isLoading" style="height:55vh" class="is-flex is-justify-content-center is-align-items-center" >
+         <dot-loader :loading="isLoading" :color="red" ></dot-loader>
+      </div>
+      <div v-else class="grid-container category">
             <div class="grid-item p-3  is-justify-content-space-between"  @click="openDetail(trend)" v-for="trend in trendingBooks" :key="trend.title">
                <grid-view :trend='trend'></grid-view>
                
@@ -45,10 +47,11 @@
 
 <script>
 import NewyorkDetail from '../components/NewyorkDetail.vue';
-// import ImageSlider from '../components/ImageSlider.vue';
 export default {
    data(){
       return {
+         red:'#707070',
+         isLoading:false,
          active:false,
          selectedBook:{},
          categories:[],
@@ -59,7 +62,6 @@ export default {
    },
    components:{
       NewyorkDetail,
-      // ImageSlider
    },
    computed:{
       loadedCategory(){
@@ -76,6 +78,7 @@ export default {
    },
    methods:{
       async randomBestSeller(){
+         this.isLoading=true;
          const res=await fetch('https://api.nytimes.com/svc/books/v3/lists/names.json?api-key=YPM2SmXttdC4PgRrpY1FjqB9Ud0fQVga');
          const resdata=await res.json();
          this.categories=resdata;
@@ -97,7 +100,7 @@ export default {
             };
             this.trendingBooks.push(temp);
             this.$store.dispatch('books/loadNewYorkBooks',this.trendingBooks)
-            
+            this.isLoading=false;
          }
          
          
@@ -130,6 +133,7 @@ export default {
 </script>
 
 <style scoped>
+
   .frame{
      margin-left: 17%;
      margin-top: 2rem;
@@ -200,6 +204,9 @@ export default {
 .desc{
    height: 7vh;
 }
+.top{
+   cursor: pointer;
+}
 @media only screen and (max-width: 768px){
    .frame{
       width: 95vw;
@@ -266,7 +273,7 @@ export default {
 .desc{
    font-size: .8rem;
    display: none;
-   height: 6vh;
+   height: 5.5vh;
 }
 .titAuthHead{
    padding: .5rem;
