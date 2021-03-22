@@ -1,7 +1,18 @@
 <template>
     <newyork-detail :active="active" :selectedBook="selectedBook" @closeModal="closeModal"></newyork-detail>
    <div class="frame">
-      <base-card style="height:100%" ></base-card>
+      <div style="width:100%; height:100%">
+         <div :class="{dis:index!==counter, hi:index===counter}"   v-for="(trend,index) in trendingBooks" :key="trend" >
+            <div v-if="index===counter" style="height:100%; width:100% " class="p-4 is-flex is-justify-content-flex-start">
+               <img :src="trend.image" class="logo" alt="">
+               <div class="titAuthHead" style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;">
+               <h1 style=" display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;overflow: hidden;" class="titAuth">{{trend.title}}</h1>
+               <h2 style=" display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;overflow: hidden;" class="Auth has-text-danger">{{trend.author}}</h2>
+               <p style=" display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;" class="desc">{{trend.description.substring(0,200)}}</p>
+               </div>
+            </div>
+         </div>
+      </div>
    </div>
    <div class="newyorkCategory is-flex is-justify-content-space-between is-align-items-center px-6 py-2">
          <div>
@@ -33,8 +44,8 @@
 </template>
 
 <script>
-import BaseCard from '../components/BaseCard.vue';
 import NewyorkDetail from '../components/NewyorkDetail.vue';
+// import ImageSlider from '../components/ImageSlider.vue';
 export default {
    data(){
       return {
@@ -42,16 +53,18 @@ export default {
          selectedBook:{},
          categories:[],
          trendingBooks:[],
-         selectedRandomCategory:{}
+         selectedRandomCategory:{},
+         counter:0
       }
    },
    components:{
-      BaseCard,
-      NewyorkDetail
+      NewyorkDetail,
+      // ImageSlider
    },
    computed:{
-      
       loadedCategory(){
+         console.log(this.$store.getters['books/getCategories']);
+         
          return this.$store.getters['books/getCategories'];
       },
       randomNumber(){
@@ -62,8 +75,6 @@ export default {
       
    },
    methods:{
-      
-      
       async randomBestSeller(){
          const res=await fetch('https://api.nytimes.com/svc/books/v3/lists/names.json?api-key=YPM2SmXttdC4PgRrpY1FjqB9Ud0fQVga');
          const resdata=await res.json();
@@ -97,19 +108,38 @@ export default {
         },
         closeModal(){
             this.active=false
-        }
+        },
+        
    },
    created(){
       this.randomBestSeller();
+   },
+   mounted(){
+      this.$nextTick(()=>{
+         window.setInterval(()=>{
+            if(this.counter<this.trendingBooks.length-1){
+               this.counter++;
+            }
+            else if(this.counter==this.trendingBooks.length-1){
+               this.counter=0;
+            }
+         },6000)
+      })
    }
 }
 </script>
 
 <style scoped>
   .frame{
+     margin-left: 17%;
+     margin-top: 2rem;
      height: 28vh;
-     width: 75vw;
-     margin: 2rem 2rem 1rem 2rem;
+     width: 55vw;
+     /* margin: 2rem 2rem 1rem 2rem; */
+     background-color: rgba(218, 216, 216, 0.473);
+     border: 0px;
+     border-radius: 100px;
+        box-shadow: 0 5px 10px rgba(131, 131, 131, 0.26);
   }
    .grid-container {
        justify-items: center;
@@ -140,6 +170,36 @@ export default {
 .view{
    font-size: 1rem;
 }
+.logo{
+   width:130px;
+   margin-left: 10%;
+}
+.titAuth{
+   font-size: 1.25rem;
+   font-weight: bold;
+   height: 5vh;
+   
+}
+.Auth{
+   font-size: 1.1rem;
+   height: 5vh;
+   
+}
+.titAuthHead{
+   padding: .5rem 2rem;
+}
+.dis{
+   display: none;
+   height: 0px;
+   width: 0px;
+}
+.hi{
+   width: 100%;
+   height:100%
+}
+.desc{
+   height: 7vh;
+}
 @media only screen and (max-width: 768px){
    .frame{
       width: 95vw;
@@ -165,10 +225,52 @@ export default {
 .newyorkCategory{
    width: 100vw;
 }
+.logo{
+   width:100px;
+
+}
+.titAuth{
+   font-size: 1rem;
+   font-weight: bold;
+   
+}
+.Auth{
+   font-size: 1rem;
+   
+}
+.desc{
+   font-size: 1rem;
+}
+.titAuthHead{
+   padding:1rem;
+}
+
 }
 @media only screen and (max-width: 430px){
     .grid-container{
         height: 55vh;
     }
+    .logo{
+       width:75px
+    }
+    .titAuth{
+   font-size: 1rem;
+   font-weight: 600;
+   height: 3vh;
+   
+}
+.Auth{
+   font-size: 1rem;
+   height: 3vh;
+}
+.desc{
+   font-size: .8rem;
+   display: none;
+   height: 6vh;
+}
+.titAuthHead{
+   padding: .5rem;
+}
+
 }
 </style>

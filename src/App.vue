@@ -45,7 +45,8 @@
       
       <router-link  to="/home"><h1 class="has-text-weight-bold BookBin">BookBin</h1></router-link>
     </div>
-    <div  class=" is-flex is-flex-direction-column is-align-items-center mt-3 ml-3 ">
+    <div></div>
+    <div  class=" is-flex is-flex-direction-column is-align-items-flex-start mt-3 ml-3 ">
       <base-button title="Home" imgSrc="home" navTo="/home"></base-button>
       <base-button title="Search" imgSrc="search" navTo="/search"></base-button>
       <base-button title="Saved" imgSrc="save" navTo="/saved"></base-button>

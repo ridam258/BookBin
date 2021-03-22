@@ -7,6 +7,8 @@ export default{
     },
     saveSavedBooks(state,payload){
         state.savedBooks.push(payload);
+        const newArr=JSON.stringify(state.savedBooks)
+        localStorage.setItem('saved',newArr);
     },
     saveNewyorkBooks(state,payload){
         state.newYorkBooks=payload;

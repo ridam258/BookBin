@@ -1,6 +1,6 @@
 <template>
-<detail-modal  :active="activeGoogle" :selectedBook="selectedBook" @closeModal="closeModal"></detail-modal>
-<newyork-detail :active="activeNew" :selectedBook="selectedBook" @closeModal="closeModal"></newyork-detail>
+<detail-modal  :active="activeGoogle" @delete="deleteSaved" :selectedBook="selectedBook" @closeModal="closeModal"></detail-modal>
+<newyork-detail :active="activeNew" @delete="deleteSaved" :selectedBook="selectedBook" @closeModal="closeModal"></newyork-detail>
 <div v-if="savedBooks.length==0" class="is-flex is-align-items-center" style="height:60vh" >
 <base-card  style="background-color:white;" class="has-text-centered">
     <h1 class="is-size-4 has-text-weight-bold">You Have Not Saved Anything Yet!</h1>
@@ -32,17 +32,12 @@ export default {
             selectedBook:{},
             activeGoogle:false,
             activeNew:false,
+            savedBooks:[]
         }
     },
     components:{
         DetailModal,
         NewyorkDetail
-    },
-    computed:{
-        savedBooks(){
-            return this.$store.getters['books/getSavedBooks'];
-        },
-        
     },
     methods:{
         openDetail(selected){        
@@ -67,9 +62,20 @@ export default {
 
                this.google = this.selectedBook.isGoogle;
             }
+        },
+        loadScreen(){
+        this.savedBooks=JSON.parse(localStorage.getItem('saved'));
+        },
+        deleteSaved(){
+            console.log('hello');
+            
+            this.loadScreen();
         }
     },
     created(){
+        this.loadScreen();
+        console.log(this.savedBooks);
+        
         console.log(this.savedBooks.length);
         console.log(this.$route);
         

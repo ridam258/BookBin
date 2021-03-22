@@ -62,6 +62,7 @@ export default{
                 link:payload.link
         };
         books.push(book);
+        
         context.commit('saveSavedBooks',book);
     },
     loadNewYorkBooks(context,payload){

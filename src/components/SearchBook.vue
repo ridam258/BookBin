@@ -6,7 +6,7 @@
         <div class="field has-addons is-justify-content-center pb-2">
   <div class="control">
     
-    <input class="input" type="text" placeholder="Find a book" v-model="inputSearched">
+    <input class="input" @focus="clearField()" type="text" placeholder="Find a book" v-model="inputSearched">
   </div>
   <div class="control" @click="searched">
     <a class="button is-light" style="border:1px solid grey">
@@ -118,7 +118,6 @@ export default {
         searched(){
           if(this.inputSearched){
           this.searchTitle(this.inputSearched,0);
-          this.inputSearched=''
           }
         },
         openDetail(selected){
@@ -128,6 +127,9 @@ export default {
         closeModal(){
          this.active=false;
         },
+        clearField(){
+          this.inputSearched="";
+        }
   },
   watch:{
     selected(value){

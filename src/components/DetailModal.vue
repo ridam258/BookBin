@@ -94,6 +94,15 @@ export default {
         },
         deleteClicked(book){
             book.isSaved=false;
+            const curSaved=JSON.parse( localStorage.getItem('saved'));
+            console.log(curSaved);
+            const index = curSaved.findIndex(x=>x.title===book.title);
+            curSaved.splice(index,1);
+            const newArr = JSON.stringify(curSaved);
+            localStorage.setItem('saved',newArr);
+            this.$emit('delete');
+            this.activeStatus=false;
+            this.$emit('closeModal');
 
         }
 },
@@ -115,7 +124,7 @@ export default {
             this.pathIsSaved=true;
         }
     },
-    emits:['closeModal']
+    emits:['closeModal','delete']
     
     
 }

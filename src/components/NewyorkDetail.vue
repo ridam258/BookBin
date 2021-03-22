@@ -24,8 +24,9 @@
                                 </div>
                                 
                                 <div class="my-4 is-flex">
-                                <button  v-if="bookClicked.isSaved===false" class="button mx-3 p-3 has-text-weight-semibold is-danger" @click="saveClicked(bookClicked)">Save</button>
-                                <router-link to="/saved"  v-else><button class="button mx-3 p-3 has-text-weight-semibold is-danger" >View</button></router-link>
+                                <button  v-if="bookClicked.isSaved===false&&!pathIsSaved" class="button mx-3 p-3 has-text-weight-semibold is-danger" @click="saveClicked(bookClicked)">Save</button>
+                                <router-link to="/saved"  v-else-if="bookClicked.isSaved&&!pathIsSaved"><button class="button mx-3 p-3 has-text-weight-semibold is-danger" >View</button></router-link>
+                                <button   v-else-if="bookClicked.isSaved===true&&pathIsSaved" class="button mx-3 p-3 has-text-weight-semibold is-danger" @click="deleteClicked(bookClicked)">Delete</button>
                                 <a :href="bookClicked.amazon"><button class="button mx-3 p-3 has-text-weight-semibold is-light">Buy</button></a>
                                 
                                 </div>
@@ -70,7 +71,8 @@ export default {
             activeStatus:false,
             bookClicked:{},
             bookDesc:'',
-            savedBook:{}
+            savedBook:{},
+            pathIsSaved:false
         }
     },
     methods:{
@@ -83,6 +85,19 @@ export default {
             book.isSaved=true;
             this.savedBook=book;
             
+        },
+        deleteClicked(book){
+            book.isSaved=false;
+            const curSaved=JSON.parse( localStorage.getItem('saved'));
+            console.log(curSaved);
+            const index = curSaved.findIndex(x=>x.title===book.title);
+            curSaved.splice(index,1);
+            const newArr = JSON.stringify(curSaved);
+            localStorage.setItem('saved',newArr);
+            this.$emit('delete');
+            this.activeStatus=false;
+            this.$emit('closeModal');
+
         }
     },
     watch:{
@@ -96,7 +111,14 @@ export default {
             this.$store.dispatch('books/loadSavedBooks',value);
         }
     },
-    emits:['closeModal']
+    created(){
+        console.log(this.$route.path);
+        
+        if(this.$route.path==='/saved'){
+            this.pathIsSaved=true;
+        }
+    },
+    emits:['closeModal','delete']
     
     
 }
